@@ -1,8 +1,0 @@
-{
-  "/committees/page": "app/committees/page.js",
-  "/page": "app/page.js",
-  "/approvals/page": "app/approvals/page.js",
-  "/departments/page": "app/departments/page.js",
-  "/api/projects/route": "app/api/projects/route.js",
-  "/projects/page": "app/projects/page.js"
-}
