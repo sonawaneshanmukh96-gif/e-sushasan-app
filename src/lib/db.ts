@@ -1,20 +1,15 @@
-import { PrismaClient } from '../generated/prisma';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { Pool } from 'pg';
+import { PrismaClient } from "@prisma/client";
 
-// Using the precise connection string for your Mumbai project
-const connectionString = "postgresql://postgres.zubvbkgrrqfvmfoqifbb:Nandurbar2026App@aws-1-ap-south-1.pooler.supabase.com:5432/postgres";
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
 
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
+declare global {
+  var prisma: undefined | ReturnType<typeof prismaClientSingleton>;
+}
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const db = globalThis.prisma ?? prismaClientSingleton();
 
-export const db =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    adapter, // This line satisfies the Prisma 7 requirement
-    log: ['query'],
-  });
+export default db;
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
+if (process.env.NODE_ENV !== "production") globalThis.prisma = db;
