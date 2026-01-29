@@ -11,17 +11,17 @@
   },
   "dependencies": {
     "@prisma/client": "^6.2.1",
-    "next": "14.1.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "prisma": "^6.2.1",
+    "next": "14.2.35",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "lucide-react": "^0.300.0",
-    "pg": "^8.11.0",
-    "prisma": "^6.2.1"
+    "pg": "^8.11.0"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.4.23",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
