@@ -1,23 +1,22 @@
 generator client {
   provider        = "prisma-client-js"
-  output          = "../src/generated/prisma"
   previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
-  // url property removed to satisfy Prisma 7 validation
+  url      = env("DATABASE_URL")
 }
 
 model committees {
-  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name           String
-  department_id  String?      @db.Uuid
-  chairman_name  String?
+  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String
+  department_id String?      @db.Uuid
+  chairman_name String?
   secretary_name String?
-  created_at     DateTime?    @default(now()) @db.Timestamptz(6)
-  departments    departments? @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tasks          tasks[]
+  created_at    DateTime?    @default(now()) @db.Timestamptz(6)
+  departments   departments? @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tasks         tasks[]
 }
 
 model departments {
