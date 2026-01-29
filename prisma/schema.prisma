@@ -1,0 +1,40 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  // url property removed to satisfy Prisma 7 validation
+}
+
+model committees {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  department_id  String?      @db.Uuid
+  chairman_name  String?
+  secretary_name String?
+  created_at     DateTime?    @default(now()) @db.Timestamptz(6)
+  departments    departments? @relation(fields: [department_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tasks          tasks[]
+}
+
+model departments {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String       @unique
+  description String?
+  created_at  DateTime?    @default(now()) @db.Timestamptz(6)
+  committees  committees[]
+}
+
+model tasks {
+  id           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title        String
+  description  String?
+  status       String?     @default("PENDING")
+  committee_id String?     @db.Uuid
+  due_date     DateTime?   @db.Date
+  created_at   DateTime?   @default(now()) @db.Timestamptz(6)
+  committees   committees? @relation(fields: [committee_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
